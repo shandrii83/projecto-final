@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 body {
-  background-image: url(/assets/img/textura-blanca.jpg);
+  background-image: url(/assets\img\photo-1501139083538-0139583c060f.jpeg);
   font-family: "Outfit", sans-serif;
+  background-repeat: no-repeat;
+  
 }
 
 /* SignIn Component */
