@@ -1,16 +1,21 @@
 <template>
-    <h1>Add a new Task</h1>
+    <h1>Add a new Task to organize your life</h1>
+    <h3></h3>
+
     <div v-if="showErrorMessage">
-        <p class="error-text">{{ errorMessage }}</p>
+        <p class=" text text-danger" :class="{ 'fade-in': showErrorMessage }">{{ errorMessage }}</p>
     </div>
-    <div>
-        <div class="input-field">
-            <input type="text" placeholder="Add a Task Title - Listen to Kendrick Lamar" v-model="name">
+    <div class="input-container">
+        <div>
+            <input class="input-field-new-task" type="text" placeholder="Add a Task Title" v-model="name">
         </div>
-        <div class="input-field">
-            <input type="text" placeholder="Add a Task Description - Look up Kendrick Lamar's FEAR album on spotify and listen to the whole album." v-model="description">
+        <div>
+            <textarea
+            class="input-field-new-task" type="text" placeholder="Add a Task Description" v-model="description" style="height: 10rem;">
+
+            </textarea>
         </div>
-        <button @click="addTask" class="button">Add</button>
+        <button @click="addTask" class="button btn btn-primary add-button">Add</button>
     </div>
 </template>
 
@@ -52,5 +57,9 @@ if(name.value.length === 0 || description.value.length === 0){
 
 </script>
 
-<style></style>
+<style>
+
+
+
+</style>
   
