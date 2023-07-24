@@ -4,7 +4,7 @@
   <div class="container fade-in">
     <div class="row vh-100 justify-content-center align-items-center">
       <div class="col-auto p-2 text-center">
-        <h4 >Bienvenido!</h4>
+        <h4 class="text-primary">Bienvenido!</h4>
         <div><img class="mb-3 img-fluid rounded "  src="\assets\img\logo1.png"  alt="" /></div>
         
         <h5>Sign In</h5>
@@ -34,14 +34,14 @@
                 required
               />
             </div>
-            <button class="btn btn-success w-100 mb-5" type="submit">
-              Sign In
+            <button class="btn btn-warning w-100 mb-5 fs-1 fw-normal  text-primary" type="submit ">
+              SING IN
             </button>
           </div>
         </form>
 
         <p>
-          Dont have an account?
+          No tienes cuenta?
           <PersonalRouter
             :route="route"
             :buttonText="buttonText"
@@ -70,31 +70,12 @@ const password = ref("");
 // Router to push user once SignedIn to Home
 const redirect = useRouter();
 
-// const signUp = async () => {
-//   if (password.value === confirmPassword.value) {
-//     try {
-//       // calls the user store and send the users info to backend to logIn
-//       await useUserStore().signUp(email.value, password.value);
-//       // redirects user to the homeView
-//       redirect.push({ path: "/auth/login" });
-//     } catch (error) {
-//       // displays error message
-//       errorMsg.value = error.message;
-//       // hides error message
-//       setTimeout(() => {
-//         errorMsg.value = null;
-//       }, 5000);
-//     }
-//     return;
-//   }
-//   errorMsg.value = "error";
-// };
 
-// Arrow function to Signin user to supaBase
+// creamos funcion de fletcha para Signin usuario a supaBase
 
 const signIn = async () => {
   try {
-    // escribir comectario, tarea para casa.
+    
     await useUserStore().signIn(email.value, password.value);
     // redirects user to the homeView
     redirect.push({ path: "/" });

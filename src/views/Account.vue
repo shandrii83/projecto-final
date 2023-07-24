@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <div
-    class="container mt-5 d-flex justify-content-center align-items-center mb-5 gap-5 flex-column"
+    class="container mt-5 d-flex justify-content-center align-items-center mb-5 gap-5 flex-column align-middle"
   >
   <div>
     <div
