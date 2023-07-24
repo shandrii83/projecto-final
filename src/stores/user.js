@@ -7,15 +7,15 @@ export const useUserStore = defineStore("user", {
     user: null,
     profile: null
   }),
-  actions: {
+  _actions: {
     async fetchUser() {
       const user = await supabase.auth.user();
-      if(user) {
+      if (user) {
         this.user = user;
         const { data: profile } = await supabase
-        .from('profiles')
-        .select()
-        .match({ user_id: this.user.id });
+          .from('profiles')
+          .select()
+          .match({ user_id: this.user.id });
 
         if (profile) this.profile = profile[0];
         // console.log('user in store: ', this.user);
@@ -28,11 +28,11 @@ export const useUserStore = defineStore("user", {
         email: email,
         password: password,
       });
-    
+
       if (error) {
         throw error;
       }
-    
+
       if (user) {
         this.user = user;
 
@@ -45,7 +45,7 @@ export const useUserStore = defineStore("user", {
             }
           ]);
 
-    
+
         if (profileError) {
           console.error(profileError);
         } else {
@@ -55,32 +55,38 @@ export const useUserStore = defineStore("user", {
         }
       }
     },
-    
+
     async signIn(email, password) {
       const { user, error } = await supabase.auth.signIn({
         email: email,
         password: password,
       },
-      {
-        shouldCreateUser: false,
-      });
+        {
+          shouldCreateUser: false,
+        });
       if (error) throw error;
       if (user) {
         this.user = user;
         const { data: profile } = await supabase
-        .from('profiles')
-        .select()
-        .match({ user_id: this.user.id })
+          .from('profiles')
+          .select()
+          .match({ user_id: this.user.id });
 
         if (profile) this.profile = profile[0];
         // console.log('profile in store: ', profile);
       }
     },
 
-    async signOut(){
+    async signOut() {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     },
+  },
+  get actions() {
+    return this._actions;
+  },
+  set actions(value) {
+    this._actions = value;
   },
 
   persist: {

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-warning">
+  <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
       <img class="navbar-brand" src="../../assets\img\logo1.png"/>
       <button
@@ -29,7 +29,7 @@
         </ul>
         <div class="d-flex align-items-center" role="search">
           <p class="me-2 mb-2 mb-lg-0 ">Welcome, {{ userEmail }}</p>
-          <button @click="signOut" class="btn btn-danger">Log out</button>
+          <button @click="signOut" class="btn btn-warning">Log out</button>
         </div>
       </div>
     </div>

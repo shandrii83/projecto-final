@@ -1,6 +1,7 @@
-<template>
-    <h1>Add a new Task to organize your life</h1>
-    <h3></h3>
+<template >
+    <div class="col-md-10 mx-auto">
+    <h1 class="text-center">Add a new Task to organize your life</h1>
+    <h3 ></h3>
 
     <div v-if="showErrorMessage">
         <p class=" text text-danger" :class="{ 'fade-in': showErrorMessage }">{{ errorMessage }}</p>
@@ -15,8 +16,9 @@
 
             </textarea>
         </div>
-        <button @click="addTask" class="button btn btn-primary add-button">Add</button>
+        <button @click="addTask" class="button btn btn-warning add-button">Add</button>
     </div>
+</div>
 </template>
 
 <script setup>
@@ -41,7 +43,7 @@ if(name.value.length === 0 || description.value.length === 0){
     // Primero comprobamos que ningún campo del input esté vacío y lanzamos el error con un timeout para informar al user.
 
     showErrorMessage.value = true;
-    errorMessage.value = 'The task title or description is empty';
+    errorMessage.value = 'El título o la descripción de la tarea está vacío';
     setTimeout(() => {
     showErrorMessage.value = false;
     }, 5000);
