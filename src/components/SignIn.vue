@@ -4,8 +4,9 @@
   <div class="container fade-in">
     <div class="row vh-100 justify-content-center align-items-center">
       <div class="col-auto p-2 text-center">
-        <h4 >Welcome!</h4>
-        <img class="mb-3 img-fluid rounded "  src="\assets\img\photo-1501139083538-0139583c060f.jpeg"  alt="" />
+        <h4 >Bienvenido!</h4>
+        <div><img class="mb-3 img-fluid rounded "  src="\assets\img\logo1.png"  alt="" /></div>
+        
         <h5>Sign In</h5>
         
 
@@ -98,7 +99,7 @@ const signIn = async () => {
     // redirects user to the homeView
     redirect.push({ path: "/" });
   } catch (error) {
-    alert(error);
+    alert("Error: Usuario no encontrado. Prueba registrarse de nuevo por favor!");
   }
 };
 </script>

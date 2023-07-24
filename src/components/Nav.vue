@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-warning">
     <div class="container-fluid">
-      <img class="navbar-brand" src="../../assets/img/POSTASK-NAV.png"/>
+      <img class="navbar-brand" src="assets\img\logo1.jpeg"/>
       <button
         class="navbar-toggler"
         type="button"
@@ -41,6 +41,8 @@
 
 <script setup>
 // import PersonalRouter from "./PersonalRouter.vue";
+/* import { computed, ref } from "vue"; */
+
 import { useUserStore } from "../stores/user";
 import { computed } from "vue";
 import { useRouter } from "vue-router";

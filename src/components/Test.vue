@@ -54,7 +54,7 @@ const getName = async () => {
   } 
 
   if (data) {
-    console.log("Usuarios",data);
+    console.log("Usuarios",test);
   }
 }
 

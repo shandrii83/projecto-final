@@ -5,8 +5,8 @@
       <div class=" col-auto p-2 text-center ">
         <div class="header">
       <div class="header-description">
-        <h4 >Welcome!</h4>
-        <img class="mb-3" src="\assets\img\photo-1501139083538-0139583c060f.jpeg" alt="" />
+        <h4 >Bienvenido!</h4>
+        <img class="mb-3" src="\assets\img\logo1.png" alt="" />
         <h5>Sign Up</h5>
       </div>
     </div>
