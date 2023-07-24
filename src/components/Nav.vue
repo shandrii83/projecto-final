@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-warning">
     <div class="container-fluid">
-      <img class="navbar-brand" src="assets\img\logo1.png"/>
+      <img class="navbar-brand" src="D:\IronHack\ProjectoFinal\assets\img\linkedin_profile_image.png"/>
       <button
         class="navbar-toggler"
         type="button"
