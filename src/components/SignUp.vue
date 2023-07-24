@@ -6,7 +6,7 @@
         <div class="header">
       <div class="header-description">
         <h4 >Welcome!</h4>
-        <img class="mb-3" src="../../assets/img/POSTASK-LOGO-PARODIA-POST-IT.png" alt="" />
+        <img class="mb-3" src="\assets\img\photo-1501139083538-0139583c060f.jpeg" alt="" />
         <h5>Sign Up</h5>
       </div>
     </div>

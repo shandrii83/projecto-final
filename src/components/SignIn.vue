@@ -5,7 +5,7 @@
     <div class="row vh-100 justify-content-center align-items-center">
       <div class="col-auto p-2 text-center">
         <h4 >Welcome!</h4>
-        <img class="mb-3" src="../../assets/img/POSTASK-LOGO-PARODIA-POST-IT.png" alt="" />
+        <img class="mb-3 img-fluid rounded "  src="\assets\img\photo-1501139083538-0139583c060f.jpeg"  alt="" />
         <h5>Sign In</h5>
         
 
