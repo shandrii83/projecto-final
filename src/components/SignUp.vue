@@ -32,7 +32,8 @@
             placeholder="Password"
             id="password"
             v-model="password"
-            required
+            required 
+            autocomplete="current-password"
           />
         </div>
         <div class="form-input">
@@ -46,7 +47,7 @@
             required
           />
         </div>
-        <button class="btn btn-success w-100 mb-5" type="submit">Sign Up</button>
+        <button class="btn btn-warning w-100 mb-5 fs-1 fw-normal  text-primary" type="submit">Sign Up</button>
         <p>
           Have an account?
           <PersonalRouter

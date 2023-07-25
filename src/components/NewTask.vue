@@ -8,7 +8,7 @@
     </div>
     <div class="input-container">
         <div>
-            <input class="input-field-new-task" type="text" placeholder="Add a Task Title" v-model="name">
+            <input class="input-field-new-task" type="text" placeholder="Agrega un título de tarea" v-model="name">
         </div>
         <div>
             <textarea
@@ -16,7 +16,7 @@
 
             </textarea>
         </div>
-        <button @click="addTask" class="button btn btn-warning add-button">Add</button>
+        <button @click="addTask" class="button btn btn-outline-warning add-button ">Agregar</button>
     </div>
 </div>
 </template>

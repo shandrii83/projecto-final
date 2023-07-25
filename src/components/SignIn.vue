@@ -4,7 +4,7 @@
   <div class="container fade-in">
     <div class="row vh-100 justify-content-center align-items-center">
       <div class="col-auto p-2 text-center">
-        <h4 class="text-primary">Bienvenido!</h4>
+        <h4 class="text-primary  text-warning">Bienvenido!</h4>
         <div><img class="mb-3 img-fluid rounded "  src="\assets\img\logo1.png"  alt="" /></div>
         
         <h5>Sign In</h5>

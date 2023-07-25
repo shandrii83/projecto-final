@@ -15,10 +15,10 @@
         
       </div>
       <div class="d-flex flex-column gap-3 mt-3" v-if="inputUpdate">
-        <input class="input-field" type="text" v-model="name" placeholder="Update Task Title" />
+        <input class="input-field" type="text" v-model="name" placeholder="Actualiza el título de la tarea" />
         <textarea class="input-field" style="height: 6rem" type="text"
           v-model="description"
-          placeholder="Update Task Description">
+          placeholder="Actualiza el discripcion de la tarea">
           
         </textarea>
         <button class="button btn btn-primary" @click="updateTask">Update</button>
