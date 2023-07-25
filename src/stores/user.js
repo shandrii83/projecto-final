@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
+/* import { supabase } from "../stores/user.js"; */
 import { supabase } from "../supabase";
 
-// Esta tienda utiliza el Options API
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,

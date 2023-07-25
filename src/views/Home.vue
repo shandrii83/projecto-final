@@ -33,7 +33,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, defineEmits,onMounted, computed } from "vue";
+/* import { ref, onMounted, computed } from "vue"; */
 import { useTaskStore } from "../stores/task";
 import NavBar from "../components/Nav.vue";
 import NewTask from "../components/NewTask.vue";
@@ -43,9 +44,10 @@ import { format } from "date-fns";
 
 const taskStore = useTaskStore();
 
+const tasks = taskStore.tasksArr;
+const emit = defineEmits();
 const isLoading = ref(true);
-
-const tasks = computed(() => taskStore.tasksArr);
+/* const tasks = computed(() => taskStore.tasksArr); */
 // console.log("taskComputed:", tasks.value);
 
 const fechaFormateada = ref("");
@@ -62,11 +64,15 @@ onMounted(async () => {
 
   // Asignar la fecha formateada a la variable fechaFormateada
   fechaFormateada.value = formatoFecha;
-
+  
   setTimeout(() => {
     isLoading.value = false;
   }, 2000);
 });
+
+const addTaskToStore = (taskData) => {
+  taskStore.addTask(taskData.name, taskData.description);
+};
 </script>
 
 <style>
