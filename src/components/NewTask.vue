@@ -22,11 +22,13 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref} from "vue";
 import { useTaskStore } from "../stores/task";
 
 const taskStore = useTaskStore();
-const emit = defineEmits();
+const emit = defineEmits(
+  ["task-created"]
+);
 
 const name = ref("");
 const description = ref("");
@@ -40,6 +42,8 @@ const addTask = () => {
     }, 5000);
   } else {
     // Используем emit для отправки данных в Home.vue
+
+    console.log("andruii");
     emit("task-created", { name: name.value, description: description.value });
     name.value = "";
     description.value = "";

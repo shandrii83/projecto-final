@@ -15,7 +15,7 @@
             <h3>Your <router-link to="/account">Account</router-link></h3>
             <p>Today's date is {{ fechaFormateada }}</p>
           </div>
-          <NewTask />
+          <NewTask  @task-created="addTaskToStore" />
         </div>
         <h1 class="text-center mt-5 mb-4">Tasks:</h1>
         <div class="d-flex flex-wrap justify-content-center gap-3">
@@ -71,6 +71,8 @@ onMounted(async () => {
 });
 
 const addTaskToStore = (taskData) => {
+
+  console.log(taskData);
   taskStore.addTask(taskData.name, taskData.description);
 };
 </script>

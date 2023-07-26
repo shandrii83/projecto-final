@@ -14,6 +14,8 @@ export const useTaskStore = defineStore("tasks", () => {
       .select("*")
       .order("id", { ascending: false });
     tasksArr.value = tasks;
+return tasksArr.value;
+
     // console.log(tasksArr.value);
   };
 
@@ -28,15 +30,13 @@ export const useTaskStore = defineStore("tasks", () => {
         description: description,
       },
     ]);
-    await fetchTasks();
-  };
+     };
 
   // borrar tareas de supabase
   const deleteTask = async (id) => {
     const { data, error } = await supabase.from("tasks").delete().match({
       id: id,
     });
-    await fetchTasks();
   };
 
   // actualizar tareas de supabase

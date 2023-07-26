@@ -1,25 +1,22 @@
 import { defineStore } from "pinia";
-/* import { 
- } from "../stores/user.js"; */
+
 import { supabase } from "../supabase";
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null,
-    profile: null
+    profile: null,
   }),
-  _actions: {
+  actions: {
     async fetchUser() {
       const user = await supabase.auth.user();
       if (user) {
         this.user = user;
         const { data: profile } = await supabase
-          .from('profiles')
+          .from("profiles")
           .select()
           .match({ user_id: this.user.id });
 
         if (profile) this.profile = profile[0];
-        // console.log('user in store: ', this.user);
-        // console.log('profile in store: ', this.profile);
       }
     },
 
@@ -37,14 +34,13 @@ export const useUserStore = defineStore("user", {
         this.user = user;
 
         const { data: profile, error: profileError } = await supabase
-          .from('profiles')
+          .from("profiles")
           .insert([
             {
               user_id: this.user.id,
-              username: email
-            }
+              username: email,
+            },
           ]);
-
 
         if (profileError) {
           console.error(profileError);
@@ -57,23 +53,24 @@ export const useUserStore = defineStore("user", {
     },
 
     async signIn(email, password) {
-      const { user, error } = await supabase.auth.signIn({
-        email: email,
-        password: password,
-      },
+      const { user, error } = await supabase.auth.signIn(
+        {
+          email: email,
+          password: password,
+        },
         {
           shouldCreateUser: false,
-        });
+        }
+      );
       if (error) throw error;
       if (user) {
         this.user = user;
         const { data: profile } = await supabase
-          .from('profiles')
+          .from("profiles")
           .select()
           .match({ user_id: this.user.id });
 
         if (profile) this.profile = profile[0];
-        // console.log('profile in store: ', profile);
       }
     },
 
@@ -81,12 +78,6 @@ export const useUserStore = defineStore("user", {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     },
-  },
-  get actions() {
-    return this._actions;
-  },
-  set actions(value) {
-    this._actions = value;
   },
 
   persist: {
