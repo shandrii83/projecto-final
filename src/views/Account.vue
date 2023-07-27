@@ -29,12 +29,12 @@
     </div>
 
     <div class="mt-5 mb-5 text-center w-50 text-center">
-      <h5>Name: {{ username }}</h5>
+      <h5 v-if="username">Name: {{ username }}</h5>
       <h5>
         Website: <a target="_blank" :href="website">{{ website }}</a>
       </h5>
       <h5>Location: {{ location }}</h5>
-      <h5 class="">Bio: {{ bio }}</h5>
+      <h5 class="" v-if="bio">Bio: {{ bio }}</h5>
     </div>
     <Profile @updateProfileEmit="hundleUpdateProfile" />
   </div>
@@ -68,7 +68,10 @@ const hundleUpdateProfile = (updatedProfileData) => {
   website.value = updatedProfileData.website;
   location.value = updatedProfileData.location;
   bio.value = updatedProfileData.bio;
-  avatar_url.value = updatedProfileData.avatar_url;
+  if (updatedProfileData.avatar_url) {
+    avatar_url.value = updatedProfileData.avatar_url;
+  }
+  
 };
 
 const uploadFile = async () => {
@@ -89,8 +92,6 @@ const uploadFile = async () => {
     console.error("Error deleting file:", urlDeleteError);
     return;
   }
-  console.log("File succesfully upload.");
-
   const timestamp = Date.now();
   const filePath = `profiles/${timestamp}-${file.value.name}`;
   const { error: uploadError } = await supabase.storage
@@ -113,6 +114,7 @@ const uploadFile = async () => {
 
   fileUrl.value = urlData.publicURL;
   console.log(fileUrl.value);
+  avatar_url.value = fileUrl.value;
 
   const { error: updateError } = await supabase
     .from("profiles")
@@ -146,7 +148,14 @@ async function getProfile() {
   bio.value = userStore.profile.bio;
   avatar_url.value = userStore.profile.avatar_url;
 } else {
-alert("El ombre de usuario no definido")
+alert("El nombre de usuario no definido");
+// Establecemos opciones predeterminadas si el perfil no está cargado
+username.value = "";
+    website.value = "";
+    location.value = "";
+    bio.value = "";
+    avatar_url.value = "";
+
 }
 
   setTimeout(() => {
@@ -170,17 +179,7 @@ onMounted(() => {
   getProfile();
 });
 
-// async function signOut() {
-//   try {
-//     loading.value = true
-//     let { error } = await supabase.auth.signOut()
-//     if (error) throw error
-//   } catch (error) {
-//     alert(error.message)
-//   } finally {
-//     loading.value = false
-//   }
-// }
+
 </script>
 
 <style>

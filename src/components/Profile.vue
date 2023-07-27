@@ -74,7 +74,8 @@
 
 <script setup>
 /* import { ref, reactive, onMounted, computed } from "vue"; */
-import { ref, onMounted,computed } from "vue";
+import { ref, onMounted, computed } from "vue";
+/* import { ref, onMounted,computed } from "vue"; */
 import { useUserStore } from "../stores/user";
 import { supabase } from "../supabase";
 
@@ -82,33 +83,17 @@ const userStore = useUserStore();
 
 const emit = defineEmits(["updateProfileEmit"]);
 const inputUpdate = ref(false);
-/* const props = defineProps({
-  profile: {
-    type: Object,
-  },
-  inputUpdate: {
-    type: Boolean,
-  },
-}); */
 
-//para el padre
-
-/* const inputUpdate = ref(false); */
-
-/* const editToggleProfile = () => {
-  inputUpdate.value = !inputUpdate.value;
-};
- */
  const profile = ref(null);
 
 const getProfile = async () => {
   const userData = await userStore.fetchUser();
   if (userData && userData.profile) {
     profile.value = userData.profile;
-    // Если данные есть, устанавливаем profile.value равным userData.profile
+    // Si hay datos, establecemos  profile.value en userData.profile
     
   } else {
-    // В противном случае устанавливаем profile.value равным пустому объекту
+    // De lo contrario, establecemos profile.value en un objeto vacío
     profile.value = { full_name: '', bio: '', location: '', website: '' };
   }
 };
@@ -122,10 +107,6 @@ const editToggleProfile = () => {
     inputUpdate.value = !inputUpdate.value;
   }
 };
-/* const getProfile = async () => {
-  await userStore.fetchUser();
-  profile.value = userStore.profile;
-}; */
 
 const updateProfile = async () => {
   if (profile.value) {
@@ -150,11 +131,8 @@ const updateProfile = async () => {
   }
 };
 
-/* onMounted(async () => {
-  await userStore.fetchUser();
-}); */
 onMounted(() => {
-  // Получаем профиль пользователя при монтировании компонента
+  // Obtene el perfil de usuario al montar el componente
   getProfile();
 });
 </script>

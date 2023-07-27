@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref} from "vue";
-import { useTaskStore } from "../stores/task";
+import { useTaskStore } from "../stores/task.js";
 
 const taskStore = useTaskStore();
 /* const emit = defineEmits(
@@ -45,8 +45,11 @@ const addTask = () => {
   } else {
     // Используем emit для отправки данных в Home.vue
 
-    console.log("andrii");
-    taskStore.addTask(name.value, description.value);
+   /*  console.log("andrii");
+    taskStore.addTask(name.value, description.value); */
+
+    // Add the new task directly to the tasks array in the store
+    taskStore.tasksArr.push({ name: name.value, description: description.value });
     /* emit("task-created", { name: name.value, description: description.value }); */
     name.value = "";
     description.value = "";

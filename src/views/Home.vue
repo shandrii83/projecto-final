@@ -41,9 +41,9 @@
 </template>
 
 <script setup>
-/* import { ref, defineEmits,onMounted, computed } from "vue"; */
+/* import { ref,onMounted, computed } from "vue"; */
 import { ref, onMounted, computed } from "vue";
-import { useTaskStore } from "../stores/task";
+import { useTaskStore } from "@/stores/task.js";
 import NavBar from "../components/Nav.vue";
 import NewTask from "../components/NewTask.vue";
 import FooterBar from "../components/Footer.vue";
@@ -52,8 +52,8 @@ import { format } from "date-fns";
 
 const taskStore = useTaskStore();
 
-/* const tasks = taskStore.tasksArr;
-const emit = defineEmits(); */
+/* const tasks = taskStore.tasksArr; */
+/* const emit = defineEmits();  */
 const tasks = ref([]);
 const isLoading = ref(true);
 /* const tasks = computed(() => taskStore.tasksArr); */
