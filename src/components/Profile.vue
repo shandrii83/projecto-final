@@ -95,15 +95,37 @@ const inputUpdate = ref(false);
 
 /* const inputUpdate = ref(false); */
 
-const editToggleProfile = () => {
+/* const editToggleProfile = () => {
   inputUpdate.value = !inputUpdate.value;
 };
+ */
+ const profile = ref(null);
 
-const profile = ref(null);
 const getProfile = async () => {
+  const userData = await userStore.fetchUser();
+  if (userData && userData.profile) {
+    profile.value = userData.profile;
+    // Если данные есть, устанавливаем profile.value равным userData.profile
+    
+  } else {
+    // В противном случае устанавливаем profile.value равным пустому объекту
+    profile.value = { full_name: '', bio: '', location: '', website: '' };
+  }
+};
+
+
+  
+ /*  profile.value = userStore.profile || { full_name: '', bio: '', location: '', website: '' };
+}; */
+const editToggleProfile = () => {
+  if (profile.value) {
+    inputUpdate.value = !inputUpdate.value;
+  }
+};
+/* const getProfile = async () => {
   await userStore.fetchUser();
   profile.value = userStore.profile;
-};
+}; */
 
 const updateProfile = async () => {
   if (profile.value) {
