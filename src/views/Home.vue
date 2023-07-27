@@ -7,7 +7,12 @@
         class="d-flex justify-content-center align-items-center"
         style="height: 200px"
       >
-      <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       </div>
       <div v-else>
         <div class="d-flex flex-column align-items-center fade-in">
@@ -30,11 +35,14 @@
     </div>
     <FooterBar />
   </div>
+  <div v-for="task in tasks" :key="task.id">
+  {{ task }}
+</div>
 </template>
 
 <script setup>
-import { ref, defineEmits,onMounted, computed } from "vue";
-/* import { ref, onMounted, computed } from "vue"; */
+/* import { ref, defineEmits,onMounted, computed } from "vue"; */
+import { ref, onMounted, computed } from "vue";
 import { useTaskStore } from "../stores/task";
 import NavBar from "../components/Nav.vue";
 import NewTask from "../components/NewTask.vue";
@@ -44,8 +52,9 @@ import { format } from "date-fns";
 
 const taskStore = useTaskStore();
 
-const tasks = taskStore.tasksArr;
-const emit = defineEmits();
+/* const tasks = taskStore.tasksArr;
+const emit = defineEmits(); */
+const tasks = ref([]);
 const isLoading = ref(true);
 /* const tasks = computed(() => taskStore.tasksArr); */
 // console.log("taskComputed:", tasks.value);
@@ -65,9 +74,9 @@ onMounted(async () => {
   // Asignar la fecha formateada a la variable fechaFormateada
   fechaFormateada.value = formatoFecha;
   
-  setTimeout(() => {
+  
     isLoading.value = false;
-  }, 2000);
+  
 });
 
 const addTaskToStore = (taskData) => {
@@ -75,6 +84,9 @@ const addTaskToStore = (taskData) => {
   console.log(taskData);
   taskStore.addTask(taskData.name, taskData.description);
 };
+onMounted(() => {
+  console.log("tasks:", tasks.value);
+});
 </script>
 
 <style>

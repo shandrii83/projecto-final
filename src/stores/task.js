@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { supabase } from "../supabase";
 import { useUserStore } from "./user";
-
+import { onMounted } from "vue";
 export const useTaskStore = defineStore("tasks", () => {
   
   const tasksArr = ref([]);
@@ -14,11 +14,11 @@ export const useTaskStore = defineStore("tasks", () => {
       .select("*")
       .order("id", { ascending: false });
     tasksArr.value = tasks;
-return tasksArr.value;
+/* return tasksArr.value; */
 
     // console.log(tasksArr.value);
   };
-
+  console.log(tasksArr.value);
   // añadir tareas de supabase
   const addTask = async (title, description) => {
     console.log(useUserStore().user.id);
@@ -31,7 +31,9 @@ return tasksArr.value;
       },
     ]);
      };
-
+     onMounted(() => {
+      fetchTasks();
+    });
   // borrar tareas de supabase
   const deleteTask = async (id) => {
     const { data, error } = await supabase.from("tasks").delete().match({

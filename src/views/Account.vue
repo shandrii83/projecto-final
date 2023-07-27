@@ -139,11 +139,15 @@ const bio = ref(null);
 
 async function getProfile() {
   await userStore.fetchUser();
+  if (userStore.profile !== null) {
   username.value = userStore.profile.full_name;
   website.value = userStore.profile.website;
   location.value = userStore.profile.location;
   bio.value = userStore.profile.bio;
   avatar_url.value = userStore.profile.avatar_url;
+} else {
+alert("El ombre de usuario no definido")
+}
 
   setTimeout(() => {
     isLoading.value = false;

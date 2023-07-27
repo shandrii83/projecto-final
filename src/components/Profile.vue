@@ -55,39 +55,58 @@
           Actualizar perfil
         </button>
       </form>
+      <div v-else>
+        <div v-if="profile">
+          <h3>Name: {{ profile.full_name }}</h3>
+          <h5>
+            Website: <a target="_blank" :href="profile.website">{{ profile.website }}</a>
+          </h5>
+          <h5>Location: {{ profile.location }}</h5>
+          <h5 class="">Bio: {{ profile.bio }}</h5>
+        </div>
+        <div v-else>
+          <p>No profile available</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+/* import { ref, reactive, onMounted, computed } from "vue"; */
+import { ref, onMounted,computed } from "vue";
 import { useUserStore } from "../stores/user";
 import { supabase } from "../supabase";
 
 const userStore = useUserStore();
 
 const emit = defineEmits(["updateProfileEmit"]);
-
-const props = defineProps({
+const inputUpdate = ref(false);
+/* const props = defineProps({
   profile: {
     type: Object,
   },
   inputUpdate: {
     type: Boolean,
   },
-});
+}); */
 
 //para el padre
 
-const inputUpdate = ref(false);
+/* const inputUpdate = ref(false); */
 
 const editToggleProfile = () => {
   inputUpdate.value = !inputUpdate.value;
 };
 
-const profile = computed(() => (userStore.profile ? userStore.profile : {}));
+const profile = ref(null);
+const getProfile = async () => {
+  await userStore.fetchUser();
+  profile.value = userStore.profile;
+};
 
 const updateProfile = async () => {
+  if (profile.value) {
   const updatedProfileData = {
     full_name: profile.value.full_name,
     bio: profile.value.bio,
@@ -106,10 +125,15 @@ const updateProfile = async () => {
     console.log("Perfil actualizado correctamente");
     emit("updateProfileEmit", updatedProfileData);
   }
+  }
 };
 
-onMounted(async () => {
+/* onMounted(async () => {
   await userStore.fetchUser();
+}); */
+onMounted(() => {
+  // Получаем профиль пользователя при монтировании компонента
+  getProfile();
 });
 </script>
 

@@ -26,12 +26,14 @@ import { ref} from "vue";
 import { useTaskStore } from "../stores/task";
 
 const taskStore = useTaskStore();
-const emit = defineEmits(
+/* const emit = defineEmits(
   ["task-created"]
-);
+); */
 
 const name = ref("");
 const description = ref("");
+const showErrorMessage = ref(false);
+const errorMessage = ref("");
 
 const addTask = () => {
   if (name.value.length === 0 || description.value.length === 0) {
@@ -43,8 +45,9 @@ const addTask = () => {
   } else {
     // Используем emit для отправки данных в Home.vue
 
-    console.log("andruii");
-    emit("task-created", { name: name.value, description: description.value });
+    console.log("andrii");
+    taskStore.addTask(name.value, description.value);
+    /* emit("task-created", { name: name.value, description: description.value }); */
     name.value = "";
     description.value = "";
   }
