@@ -34,15 +34,15 @@
       </div>
     </div>
     <FooterBar />
-  </div>
+  <!-- </div>
   <div v-for="task in tasks" :key="task.id">
-  {{ task }}
+  {{ task }} -->
 </div>
 </template>
 
 <script setup>
 /* import { ref,onMounted, computed } from "vue"; */
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useTaskStore } from "@/stores/task.js";
 import NavBar from "../components/Nav.vue";
 import NewTask from "../components/NewTask.vue";

@@ -36,9 +36,21 @@
       <h5>Location: {{ location }}</h5>
       <h5 class="" v-if="bio">Bio: {{ bio }}</h5>
     </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+    <!-- Utilisamos el componente TaskItem para cada tarea -->
+    <TaskItem
+      class="task-item fade-in"
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task"
+    />
+  </div>
+
     <Profile @updateProfileEmit="hundleUpdateProfile" />
   </div>
       </div>
+      
   </div>
     
   <FooterBar />
@@ -51,8 +63,14 @@ import { useUserStore } from "../stores/user";
 import NavBar from "../components/Nav.vue";
 import FooterBar from "../components/Footer.vue";
 import Profile from "../components/Profile.vue";
+import { computed } from "vue";
+import { useTaskStore } from "@/stores/task.js";
+import TaskItem from "../components/TaskItem.vue";
 
 // variables avatar
+const taskStore = useTaskStore();
+const tasks = computed(() => taskStore.tasksArr);
+
 
 const file = ref();
 const fileUrl = ref();
@@ -76,6 +94,11 @@ const hundleUpdateProfile = (updatedProfileData) => {
 
 const uploadFile = async () => {
   if (!file.value) return;
+
+  if (!avatar_url.value) {
+    console.error("Dirección de avatar no definida ");
+    return;
+  }
 
   const { data } = await supabase
     .from("profiles")
@@ -175,8 +198,11 @@ watch(
   { deep: true }
 );
 
-onMounted(() => {
-  getProfile();
+onMounted(async () => {
+  await taskStore.fetchTasks();
+  getProfile(); 
+/* onMounted(() => {
+  getProfile(); */
 });
 
 
