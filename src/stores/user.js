@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 import { supabase } from "../supabase";
 
 
@@ -19,24 +18,17 @@ export const useUserStore = defineStore("user", {
     },
     async fetchProfile(userId) {
       const { data: profileData, error } = await supabase
-        /* const { data: profile } = await supabase */
           .from("profiles")
           .select()
           .match({ user_id: userId });
-          /* .match({ user_id: this.user.id }); */
-
+          
           if (error) {
             console.error(error);
-            return;
-          }
-
-          if (profileData && profileData.length > 0) {
+          } else if (profileData && profileData.length > 0) {
             this.profile = profileData[0];
           }
         },
-      /*   if (profile) this.profile = profile[0];
-      }
-    }, */
+    
 
     async signUp(email, password) {
       const { user, error } = await supabase.auth.signUp({
@@ -69,7 +61,7 @@ export const useUserStore = defineStore("user", {
         }
       }
     },
-
+// Métodos para registrarse, iniciar sesión, cerrar sesión y otras acciones ...
     async signIn(email, password) {
       const { user, error } = await supabase.auth.signIn(
         {

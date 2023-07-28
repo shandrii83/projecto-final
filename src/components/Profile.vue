@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container p-5">
     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-      <button class="button-edit button btn btn-warning" @click="editToggleProfile">
+      <!-- <button class="button-edit button btn btn-warning " @click="editToggleProfile">
         Edit Profile
-      </button>
+      </button> -->
       <form v-if="inputUpdate" class="d-flex flex-column gap-4" action="">
         <div>
           <label for="">Full name</label>
@@ -68,6 +68,10 @@
           <p>No profile available</p>
         </div>
       </div>
+        <button class="button-edit button btn btn-warning " @click="editToggleProfile">
+        Edit Profile
+      </button>
+           
     </div>
   </div>
 </template>
@@ -101,8 +105,6 @@ const getProfile = async () => {
 
 
   
- /*  profile.value = userStore.profile || { full_name: '', bio: '', location: '', website: '' };
-}; */
 const editToggleProfile = () => {
   if (profile.value) {
     inputUpdate.value = !inputUpdate.value;

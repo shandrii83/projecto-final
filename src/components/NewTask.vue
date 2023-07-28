@@ -35,7 +35,20 @@ const description = ref("");
 const showErrorMessage = ref(false);
 const errorMessage = ref("");
 
-const addTask = () => {
+
+
+
+/* const addTask = () => {
+  if (name.value.length === 0 || description.value.length === 0) {
+    showErrorMessage.value = true;
+    errorMessage.value = "El título o la descripción de la tarea está vacío";
+    setTimeout(() => {
+      showErrorMessage.value = false;
+    }, 5000);
+  } else { */
+    
+
+    const addTask = () => {
   if (name.value.length === 0 || description.value.length === 0) {
     showErrorMessage.value = true;
     errorMessage.value = "El título o la descripción de la tarea está vacío";
@@ -43,19 +56,18 @@ const addTask = () => {
       showErrorMessage.value = false;
     }, 5000);
   } else {
-    
+
+
    /*  console.log("andrii");
     taskStore.addTask(name.value, description.value); */
     taskStore.addTask(name.value.trim(), description.value.trim());
     name.value = "";
     description.value = "";
   }
-   /*   Add the new task directly to the tasks array in the store
-    taskStore.tasksArr.push({ name: name.value, description: description.value });
-    
+        
     name.value = "";
     description.value = "";
-  } */
+  
 };
 </script>
   

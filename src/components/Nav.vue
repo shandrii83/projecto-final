@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-primary">
     <div class="container-fluid">
-      <img class="navbar-brand" src="../../assets\img\logo1.png"/>
+      <img class="navbar-brand rounded-3" src="../../assets\img\logo1.png"/>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,24 +19,21 @@
             <router-link class="nav-link" to="/"> Home </router-link>
           </li> -->
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Task Manager</router-link>
+            <router-link class="nav-link active text-warning" to="/">Tareas</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/account"
-              >Your Account</router-link
+            <router-link class="nav-link active text-warning" to="/account"
+              >Su cuenta</router-link
             >
           </li>
         </ul>
         <div class="d-flex align-items-center" role="search">
-          <p class="me-2 mb-2 mb-lg-0 ">Welcome, {{ userEmail }}</p>
+          <p class="me-2 mb-2 mb-lg-0 text-warning">Welcome, {{ userEmail }}</p>
           <button @click="signOut" class="btn btn-warning">Log out</button>
         </div>
       </div>
     </div>
   </nav>
-
-  
-  <!-- <PersonalRouter :route="route" :buttonText="buttonText" class="logo-link"/> -->
 </template>
 
 <script setup>
@@ -44,34 +41,20 @@
 /* import { computed, ref } from "vue"; */
 
 import { useUserStore } from "../stores/user";
-import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 
-//constant to save a variable that will hold the use router method
-const route = "/";
-
-const buttonText = "Todo app";
-
-// constant to save a variable that will get the user from store with a computed function imported from vue
-
-// const getUser = computed(() => useUserStore().user);
-const getUser = useUserStore().user;
-
-// constant that calls user email from the useUSerStore
-const userEmail = getUser.email;
-
-// async function that calls the signOut method from the useUserStore and pushes the user back to the Auth view.
 const redirect = useRouter();
+const userStore = useUserStore();
+const userEmail = ref(userStore.user.email);
 
 const signOut = async () => {
   try {
-    await useUserStore().signOut();
+    await userStore.signOut();
     redirect.push({ path: "/auth/login" });
-
-    // call the user store and send the users info to backend to signOut
-    // then redirect user to the homeView
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 </script>
 

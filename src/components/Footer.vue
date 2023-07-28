@@ -1,7 +1,8 @@
 <template>
-    <div class=" bg-primary p-4 d-flex flex-column justify-content-center align-items-center fixed-bottom">
-        <img class="mb-3" style="width: 7rem;" src="../../assets\img\logo1.png" alt="">
-       <p class="text-warning">© 2023 Tarea en Accion. All rights reserved. Built by Andrii Sharmar</p>
+    <div class=" bg-primary p-3 d-flex flex-column justify-content-center align-items-center">
+        <img class="mb-3 rounded-2" style="max-width: 100px; height: auto;" src="../../assets\img\logo1.png" alt="">
+       <p class="text-warning mb-2">© 2023 Tarea en Accion.</p>  <p class="text-warning mb-0">All rights reserved. Built by Andrii Sharmar</p>
+       <p></p>
     </div>
 </template>
 
