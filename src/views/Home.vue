@@ -18,12 +18,12 @@
       <div v-else>
         <div class="d-flex flex-column align-items-center fade-in">
           <div class="text-center">
-            <h3>Your <router-link to="/account">Account</router-link></h3>
-            <p>Today's date is {{ fechaFormateada }}</p>
+            <h3>Su <router-link to="/account">cuenta</router-link></h3>
+            <p>La fecha de hoy es {{ fechaFormateada }}</p>
           </div>
           <NewTask />
         </div>
-        <h1 class="text-center mt-5 mb-4">Tasks:</h1>
+        <h1 class="text-center mt-5 mb-4">Tareas:</h1>
         <div class="d-flex flex-wrap justify-content-center gap-3 mb-5">
           <TaskItem
             class="task-item fade-in"

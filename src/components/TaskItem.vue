@@ -2,7 +2,7 @@
    <div class="task-item">
     <h3>{{ task.title }}</h3>
     <p>{{ task.description }}</p>
-    <p>Дата создания: {{ formatDate(task.timestamp) }}</p>
+    <p>Fecha de creación: {{ formatDate(task.timestamp) }}</p>
   <div class="card">
     <div class="card-body">
       <h3 :class="{ taskComplete: task.is_complete }">{{ title }}</h3>
@@ -24,8 +24,7 @@
           v-model="description"
           placeholder="Actualiza el discripcion de la tarea">
        </textarea>
-        <!-- <button class="button btn btn-primary" @click="updateTask">Update</button> -->
-      </div>
+              </div>
     </div>
   </div>
 </div>
@@ -34,7 +33,8 @@
 <script setup>
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
-  return date.toLocaleString(); // Или другой формат вывода даты по вашему выбору
+  //retornamos fecha local para cada tarae usando metodo toLocaleString()
+  return date.toLocaleString(); 
 };
 /* import { ref, onUpdated, watch } from "vue"; */
 import { ref } from "vue";
@@ -65,9 +65,6 @@ const deleteTask = async () => {
   await taskStore.deleteTask(props.task.id);
 };
 
-// variable inputUpdate la utilizo en false para luego utilizarla en el dom para mantener ocultos los inputs para hacer un update
-/* const inputUpdate = ref(false); */
-
 // funcion basica para hacer un toggle a traves de un boton @click para cambiar la variable inputUpdate de false a true y con esto dejar ver en el DOM dichos inputs y el boton para hacerel update
 const updateToggle = () => {
   inputUpdate.value = !inputUpdate.value;
@@ -81,22 +78,11 @@ const updateTask = () => {
   taskStore.updateTask(task.id, title.trim(), description.trim());
   updateToggle();
 };
-/* const updateTask = () => {
-  const titleParam = name.value ? name.value : props.task.title;
-  const descriptionParam = description.value ? description.value : props.task.description;
-  taskStore.updateTask(props.task.id, titleParam, descriptionParam);
-  name.value = "";
-  description.value = "";
-  updateToggle();
-}; */
 
 const toggleComplete = () => {
   taskStore.completeTask(props.task.id, !props.task.is_complete);
 };
-/* const toggleComplete = () => {
-  props.task.is_complete = !props.task.is_complete;
-  taskStore.completeTask(props.task.id, props.task.is_complete);
-}; */
+
 </script>
 
 <style>

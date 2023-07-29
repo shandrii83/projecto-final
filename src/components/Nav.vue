@@ -15,9 +15,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!-- <li class="nav-item">
-            <router-link class="nav-link" to="/"> Home </router-link>
-          </li> -->
+          
           <li class="nav-item">
             <router-link class="nav-link active text-warning" to="/">Tareas</router-link>
           </li>
@@ -28,8 +26,8 @@
           </li>
         </ul>
         <div class="d-flex align-items-center" role="search">
-          <p class="me-2 mb-2 mb-lg-0 text-warning">Welcome, {{ userEmail }}</p>
-          <button @click="signOut" class="btn btn-warning">Log out</button>
+          <p class="me-2 mb-2 mb-lg-0 text-warning">Bienvenido, {{ userEmail }}</p>
+          <button @click="signOut" class="btn btn-warning">Cerrar sesión</button>
         </div>
       </div>
     </div>
@@ -37,8 +35,6 @@
 </template>
 
 <script setup>
-// import PersonalRouter from "./PersonalRouter.vue";
-/* import { computed, ref } from "vue"; */
 
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
