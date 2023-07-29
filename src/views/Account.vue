@@ -42,7 +42,8 @@
 
 <script setup>
 import { supabase } from "../supabase";
-import { onMounted, ref, watch } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
+/* import { onMounted, ref, watch } from "vue"; */
 import { useUserStore } from "../stores/user";
 import NavBar from "../components/Nav.vue";
 import FooterBar from "../components/Footer.vue";
@@ -51,9 +52,10 @@ import Profile from "../components/Profile.vue";
 const file = ref();
 const fileUrl = ref();
 
-/* const fileManager = (event) => {
+const fileManager = (event) => {
   file.value = event.target.files[0];
-}; */
+    console.log("Selected file:", file.value);
+};
 
 const hundleUpdateProfile = (updatedProfileData) => {
   profile.value = { ...profile.value, ...updatedProfileData };
@@ -64,11 +66,13 @@ const uploadFile = async () => {
     // Asegúramos de que el perfil esté definido y contenga la propiedad avatar_url
     if (!profile.value) {
     profile.value = { avatar_url: null };
+    
   }
     const { data } = await supabase
       .from("profiles")
       .select("avatar_url")
       .eq("user_id", supabase.auth.user().id);
+      
   
     const deleteUrl = data[0].avatar_url;
     // console.log(deleteUrl);
@@ -114,15 +118,18 @@ const uploadFile = async () => {
       console.error("Error updating profile:", updateError);
       return;
     }
+    profile.value.avatar_url = fileUrl.value;
     console.log("Profile successfully updated.");
-  
+    
     await userStore.fetchUser();
+    
+    
   };
 
 const userStore = useUserStore();
 const isLoading = ref(true);
 const hidden = ref(false);
-const profile = ref({
+const profile = reactive({
   full_name: null,
   location: null,
   bio: null,
@@ -134,7 +141,13 @@ async function getProfile() {
   await userStore.fetchUser();
   const userProfile = userStore.profile;
   if (userProfile) {
-    profile.value = { ...profile.value, ...userProfile };
+    profile.avatar_url = userProfile.avatar_url;
+        profile.full_name = userProfile.full_name;
+    profile.location = userProfile.location;
+    profile.bio = userProfile.bio;
+    profile.website = userProfile.website;
+
+    /* profile.value = { ...profile.value, ...userProfile }; */
   }
   setTimeout(() => {
     isLoading.value = false;

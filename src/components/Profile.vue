@@ -56,7 +56,7 @@
         </button>
       </form>
       <div v-else>
-        <div v-if="profile">
+        <div v-if="profile && !isLoading">
           <h3>Name: {{ profile.full_name }}</h3>
           <h5>
             Website: <a target="_blank" :href="profile.website">{{ profile.website }}</a>
@@ -78,7 +78,6 @@
 
 <script setup>
 /* import { ref, reactive, onMounted, computed } from "vue"; */
-
 /* import { ref, onMounted,computed } from "vue"; */
 import { useUserStore } from "../stores/user";
 import { ref, onMounted } from "vue";
@@ -86,11 +85,27 @@ import { supabase } from "../supabase";
 
 const userStore = useUserStore();
 
+const email = ref("");
+const password = ref("");
+const signUpUser = async () => {
+  try {
+    await userStore.signUp(email.value, password.value);
+    // После успешной регистрации аккаунта, пользователь будет добавлен в базу данных
+    // Вы можете добавить дополнительную логику для перенаправления пользователя на другую страницу или выполнения других действий после успешной регистрации.
+  } catch (error) {
+    console.error("Ошибка при регистрации пользователя:", error.message);
+  }
+};
+
+
+
 const emit = defineEmits(["updateProfileEmit"]);
 const inputUpdate = ref(false);
 
  const profile = ref(null);
 
+
+ 
 const getProfile = async () => {
   const userData = await userStore.fetchUser();
   if (userData && userData.profile) {
