@@ -3,46 +3,52 @@ import { defineStore } from "pinia";
 import { supabase } from "../supabase";
 import { useUserStore } from "./user";
 import { onMounted } from "vue";
+
 export const useTaskStore = defineStore("tasks", () => {
-  
   const tasksArr = ref([]);
-  
-  // conesguir tareas de supabase
+
   const fetchTasks = async () => {
-    const { data: tasks } = await supabase
+    const { data: tasks, error } = await supabase
       .from("tasks")
       .select("*")
       .order("id", { ascending: false });
-    tasksArr.value = tasks;
-/* return tasksArr.value; */
 
-    // console.log(tasksArr.value);
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    tasksArr.value = tasks;
   };
-  console.log(tasksArr.value);
-  // añadir tareas de supabase
+
   const addTask = async (title, description) => {
-    console.log(useUserStore().user.id);
+    const user_id = useUserStore().user.id;
+
     const { data, error } = await supabase.from("tasks").insert([
       {
-        user_id: useUserStore().user.id,
+        user_id: user_id,
         title: title,
         is_complete: false,
         description: description,
       },
     ]);
-     };
-     onMounted(() => {
-      fetchTasks();
-    });
-  // borrar tareas de supabase
-  const deleteTask = async (id) => {
-    /* const { data, error } = */ await supabase.from("tasks").delete().match({
-      id: id,
-    });
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
     await fetchTasks();
   };
 
-  // actualizar tareas de supabase
+  const deleteTask = async (id) => {
+    await supabase.from("tasks").delete().match({
+      id: id,
+    });
+
+    await fetchTasks();
+  };
+
   const updateTask = async (id, title, description) => {
     const { data, error } = await supabase
       .from("tasks")
@@ -54,27 +60,38 @@ export const useTaskStore = defineStore("tasks", () => {
       ])
       .eq("id", id);
 
-      if (error) {
-        console.error(error);
-        return;
-      }
+    if (error) {
+      console.error(error);
+      return;
+    }
 
-      await fetchTasks();
+    await fetchTasks();
   };
 
-    // completar tareas de supabase
-    const completeTask = async (id, booleanValue) => {
-      const { data, error } = await supabase
-        .from('tasks')
-        .update({ is_complete: booleanValue })
-        .eq('id', id);
-    
-      if (error) {
-        console.error(error);
-        return;
-      }
-        await fetchTasks();
-    };
+  const completeTask = async (id, booleanValue) => {
+    const { data, error } = await supabase
+      .from("tasks")
+      .update({ is_complete: booleanValue })
+      .eq("id", id);
 
-  return { tasksArr, fetchTasks, addTask, deleteTask, updateTask, completeTask };
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    await fetchTasks();
+  };
+
+  onMounted(() => {
+    fetchTasks();
+  });
+
+  return {
+    tasksArr,
+    fetchTasks,
+    addTask,
+    deleteTask,
+    updateTask,
+    completeTask,
+  };
 });

@@ -15,13 +15,12 @@
         
       </div>
       <div class="d-flex flex-column gap-3 mt-3" v-if="inputUpdate">
-        <input class="input-field" type="text" v-model="name" placeholder="Actualiza el título de la tarea" />
+        <input class="input-field" type="text" v-model="title" placeholder="Actualiza el título de la tarea" />
         <textarea class="input-field" style="height: 6rem" type="text"
           v-model="description"
           placeholder="Actualiza el discripcion de la tarea">
-          
-        </textarea>
-        <button class="button btn btn-primary" @click="updateTask">Update</button>
+       </textarea>
+        <!-- <button class="button btn btn-primary" @click="updateTask">Update</button> -->
       </div>
     </div>
   </div>
@@ -39,8 +38,8 @@ const taskStore = useTaskStore();
 const props = defineProps(["task"]);
 
 // Extraemos datos de props
-const title = props.task.title;
-const description = props.task.description;
+const title = ref(props.task.title);
+const description = ref(props.task.description);
 const inputUpdate = ref(false);
 
 // Variables reactivas para almacenar datos
@@ -70,6 +69,7 @@ const updateTask = () => {
   const titleParam = title.value.trim();
   const descriptionParam = description.value.trim();
   taskStore.updateTask(props.task.id, titleParam, descriptionParam);
+  taskStore.updateTask(task.id, title.trim(), description.trim());
   updateToggle();
 };
 /* const updateTask = () => {

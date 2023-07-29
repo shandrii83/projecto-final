@@ -31,34 +31,6 @@
               </button>
             </div>
           </div>
-
-          <!-- <div class="text-container w-50 p-5">
-            <h3>Perfil:</h3>
-            <h5 class="fw-lighter">
-              Nombre:
-              <h5>{{ profile.full_name }}</h5>
-            </h5>
-
-            <h5 class="fw-lighter">
-              Location:
-              <h5 class="text-muted">{{ profile.location }}</h5>
-            </h5>
-
-            <h5 class="fw-lighter">
-              Bio:
-              <h5>{{ profile.bio }}</h5>
-            </h5>
-
-            <h5 class="text-secondary">
-              <a
-                style="text-decoration: none;"
-                target="_blank"
-                :href="profile.website"
-              >
-                Check my portfolio
-              </a>
-            </h5>
-          </div> -->
         </div>
 
         <Profile :profile="profile" @updateProfileEmit="hundleUpdateProfile" />
