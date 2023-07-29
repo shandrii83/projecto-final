@@ -1,4 +1,8 @@
 <template>
+   <div class="task-item">
+    <h3>{{ task.title }}</h3>
+    <p>{{ task.description }}</p>
+    <p>Дата создания: {{ formatDate(task.timestamp) }}</p>
   <div class="card">
     <div class="card-body">
       <h3 :class="{ taskComplete: task.is_complete }">{{ title }}</h3>
@@ -24,9 +28,14 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script setup>
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return date.toLocaleString(); // Или другой формат вывода даты по вашему выбору
+};
 /* import { ref, onUpdated, watch } from "vue"; */
 import { ref } from "vue";
 import { useTaskStore } from "../stores/task";

@@ -23,6 +23,7 @@ export const useTaskStore = defineStore("tasks", () => {
 
   const addTask = async (title, description) => {
     const user_id = useUserStore().user.id;
+    const timestamp = new Date();
 
     const { data, error } = await supabase.from("tasks").insert([
       {
@@ -30,6 +31,7 @@ export const useTaskStore = defineStore("tasks", () => {
         title: title,
         is_complete: false,
         description: description,
+        timestamp: timestamp.toISOString(),
       },
     ]);
 
