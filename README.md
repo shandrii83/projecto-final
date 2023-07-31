@@ -94,4 +94,5 @@ Este proyecto es el resultado del esfuerzo realizado durante el bootcamp de Desa
 - Añadir últimos detalles al Readme.
 - Repaso a la App y todas sus funcionalidades.
 
-###
+###  link a projecto final 
+    https://slides.com/d/paZx1YY/live
