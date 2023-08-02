@@ -15,7 +15,9 @@ export const useUserStore = defineStore("user", {
         this.user = user;
         await this.fetchProfile(user.id);
       }
+      return { user: this.user, profile: this.profile }; /// Devolver usuario y perfil
     },
+
     async fetchProfile(userId) {
       const { data: profileData, error } = await supabase
           .from("profiles")
@@ -26,6 +28,15 @@ export const useUserStore = defineStore("user", {
             console.error(error);
           } else if (profileData && profileData.length > 0) {
             this.profile = profileData[0];
+          }else {
+            // Si no hay datos de perfil, establezca el perfil en un objeto vacío
+        this.profile = {
+          user_id: userId,
+          full_name: "",
+          bio: "",
+          location: "",
+          website: "",
+        };
           }
         },
     
@@ -87,7 +98,24 @@ export const useUserStore = defineStore("user", {
     async signOut() {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
+      
     },
+    async updateUser(updatedData) {
+      this.profile = {
+        ...this.profile,
+        ...updatedData,
+      };
+    },
+    // Add a new action to update the profile in the store and local storage
+    async updateProfile(profileData) {
+      this.profile = {
+        ...this.profile,
+        ...profileData,
+      };
+      // Save the updated profile data in the local storage
+      localStorage.setItem("profile", JSON.stringify(this.profile));
+    },
+
   },
 
   persist: {
@@ -96,6 +124,14 @@ export const useUserStore = defineStore("user", {
       {
         key: "user",
         storage: localStorage,
+      },
+      // Add a new strategy to persist profile data separately
+      {
+        key: "profile",
+        storage: localStorage,
+        restore: (data) => {
+          return JSON.parse(data) || null;
+        },
       },
     ],
   },

@@ -1,10 +1,7 @@
 <template>
   <div class="container p-5">
     <div class="d-flex flex-column justify-content-center align-items-center gap-4">
-      <!-- <button class="button-edit button btn btn-warning " @click="editToggleProfile">
-        Edit Profile
-      </button> -->
-      <form v-if="inputUpdate" class="d-flex flex-column gap-4" action="">
+           <form v-if="inputUpdate" class="d-flex flex-column gap-4" action="">
         <div>
           <label for="">Full name</label>
           <input
@@ -56,7 +53,8 @@
         </button>
       </form>
       <div v-else>
-        <div v-if="profile && !isLoading">
+        <div v-if="profile && !isLoading"> 
+<!-- Agregar verificación para isLoading -->
           <h3>Name: {{ profile.full_name }}</h3>
           <h5>
             Website: <a target="_blank" :href="profile.website">{{ profile.website }}</a>
@@ -82,7 +80,10 @@
 import { useUserStore } from "../stores/user";
 import { ref, onMounted } from "vue";
 import { supabase } from "../supabase";
+import { v4 as uuidv4 } from 'uuid';
 
+const emits = defineEmits();
+const props = defineProps();
 const userStore = useUserStore();
 
 const email = ref("");
@@ -90,23 +91,22 @@ const password = ref("");
 const signUpUser = async () => {
   try {
     await userStore.signUp(email.value, password.value);
-    // После успешной регистрации аккаунта, пользователь будет добавлен в базу данных
-    // Вы можете добавить дополнительную логику для перенаправления пользователя на другую страницу или выполнения других действий после успешной регистрации.
+    // Después de un registro de cuenta exitoso, el usuario se agregará a la base de datos
+  
   } catch (error) {
-    console.error("Ошибка при регистрации пользователя:", error.message);
+    console.error("Error de registro de usuario:", error.message);
   }
 };
 
 
 
-const emit = defineEmits(["updateProfileEmit"]);
+
 const inputUpdate = ref(false);
-
  const profile = ref(null);
-
-
+ const isLoading = ref(false); // Agrega la variable isLoading
  
 const getProfile = async () => {
+  isLoading.value = true; // Establecer isLoading en verdadero antes de cargar datos
   const userData = await userStore.fetchUser();
   if (userData && userData.profile) {
     profile.value = userData.profile;
@@ -114,8 +114,15 @@ const getProfile = async () => {
     
   } else {
     // De lo contrario, establecemos profile.value en un objeto vacío
-    profile.value = { full_name: '', bio: '', location: '', website: '' };
+    profile.value = {
+     user_id: supabase.auth.user().id,
+     full_name: "",
+     bio: "", 
+     location: "", 
+     website: "" };
+    /* profile.value = { full_name: '', bio: '', location: '', website: '' }; */
   }
+  isLoading.value = false;// Establecer isLoading en falso después de cargar datos
 };
 
 
@@ -129,24 +136,38 @@ const editToggleProfile = () => {
 const updateProfile = async () => {
   if (profile.value) {
   const updatedProfileData = {
+    id: profile.value.id || uuidv4(),// Si no hay "id", establezca un nuevo identificador único
+    user_id: profile.value.user_id, 
     full_name: profile.value.full_name,
     bio: profile.value.bio,
     location: profile.value.location,
     website: profile.value.website,
-  };
-  console.log(updatedProfileData);
-  const { data, error } = await supabase
-    .from("profiles")
-    .update(updatedProfileData)
-    .eq("user_id", supabase.auth.user().id);
-  editToggleProfile();
-  if (error) {
-    console.error(error);
-  } else {
-    console.log("Perfil actualizado correctamente");
-    emit("updateProfileEmit", updatedProfileData);
+      };
+ /*  console.log(updatedProfileData); */
+
+// Проверяем существование записи с указанным user_id в таблице "profiles"
+const { data, error } = await supabase
+      .from("profiles")
+      .upsert(updatedProfileData, { onConflict: ["user_id"] });
+
+    editToggleProfile();
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Perfil actualizado correctamente");
+      emits("updateProfileEmit", updatedProfileData);
   }
-  }
+}else {
+      // Если записи нет, выполняем вставку новой записи
+      const { data, error } = await supabase.from("profiles").insert([updatedProfileData]);
+
+      editToggleProfile();
+      if (error) {
+        console.error(error);
+      } else {
+        console.log("Perfil creado con éxito");
+      }
+    }
 };
 
 onMounted(() => {
