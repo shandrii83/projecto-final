@@ -107,6 +107,7 @@ const uploadFile = async () => {
     }
   
     fileUrl.value = urlData.publicURL;
+    profile.avatar_url = fileUrl.value;
     console.log(fileUrl.value);
   
     const { error: updateError } = await supabase
