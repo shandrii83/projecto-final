@@ -18,9 +18,9 @@ const { user } = storeToRefs(userStore);
 onMounted(async () => {
   const appReady = ref(null);
   try {
-    await userStore.fetchUser(); // here we call fetch user
+    await userStore.fetchUser(); // aquí llamamos buscar usuario
     if (!user.value) {
-      // redirect them to logout if the user is not there
+      // Redirigirlas a cerrar sesión si el usuario no está ...
       appReady.value = true;
       router.push({ path: "/auth/login" });
     } else {

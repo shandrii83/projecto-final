@@ -106,13 +106,15 @@ export const useUserStore = defineStore("user", {
         ...updatedData,
       };
     },
-    // Add a new action to update the profile in the store and local storage
+    //Agregue una nueva acción para actualizar el perfil en la tienda y el almacenamiento local
+
     async updateProfile(profileData) {
       this.profile = {
         ...this.profile,
         ...profileData,
       };
-      // Save the updated profile data in the local storage
+      // Guarde los datos de perfil actualizados en el almacenamiento local
+
       localStorage.setItem("profile", JSON.stringify(this.profile));
     },
 
@@ -125,7 +127,8 @@ export const useUserStore = defineStore("user", {
         key: "user",
         storage: localStorage,
       },
-      // Add a new strategy to persist profile data separately
+      // Agregue una nueva estrategia para conservar los datos del perfil por separado
+
       {
         key: "profile",
         storage: localStorage,
